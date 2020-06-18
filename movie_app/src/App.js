@@ -1,33 +1,45 @@
 import React from "react";
 
-function Food({ name, picture }) {
-  return (
-    <div>
-      <h1>I like {name}</h1>;
-      <img src={picture} />
-    </div>
-  );
-}
+class App extends React.Component {
+  state = {
+    count: 0,
+  };
 
-const foodILike = [
-  {
-    name: "kimchi",
-    image:
-      "https://media.vlpt.us/images/yujo/post/2243af27-16da-44d5-81f5-a715df9fdde5/leetcode-1299.png",
-  },
-  {
-    name: "hambuger",
-    image:
-      "https://media.vlpt.us/images/yujo/post/32884cb2-5b96-4503-898b-0c853b4082ab/image.png",
-  },
-];
+  add = () => {
+    this.setState((current) => ({ count: current.count + 1 }));
+  };
 
-function renderFood(dish) {
-  return <Food name={dish.name} picture={dish.image} />;
-}
+  minus = () => {
+    this.setState((current) => ({ count: current.count - 1 }));
+  };
 
-function App() {
-  return <div>{foodILike.map(renderFood)}</div>;
+  constructor(props) {
+    super(props);
+    console.log("props");
+  }
+
+  componentDidMount() {
+    console.log("componentDidmount");
+  }
+
+  componentDidUpdate() {
+    console.log("component Didupdate");
+  }
+
+  componentWillUnmount() {
+    console.log("Goobye");
+  }
+
+  render() {
+    console.log("render");
+    return (
+      <div>
+        <h1>I`m class {this.state.count}</h1>;
+        <button onClick={this.add}>Add</button>;
+        <button onClick={this.minus}>minus</button>;
+      </div>
+    );
+  }
 }
 
 export default App;
