@@ -1,44 +1,28 @@
 import React from "react";
+import axios from "axios";
 
 class App extends React.Component {
   state = {
-    count: 0,
+    isLoading: true,
+    movies: [],
   };
 
-  add = () => {
-    this.setState((current) => ({ count: current.count + 1 }));
+  getMovies = async () => {
+    const {
+      data: {
+        data: { movies },
+      },
+    } = await axios.get("https://yts.mx/api/v2/list_movies.json");
+    this.setState({ movies, isLoading: false });
   };
-
-  minus = () => {
-    this.setState((current) => ({ count: current.count - 1 }));
-  };
-
-  constructor(props) {
-    super(props);
-    console.log("props");
-  }
 
   componentDidMount() {
-    console.log("componentDidmount");
-  }
-
-  componentDidUpdate() {
-    console.log("component Didupdate");
-  }
-
-  componentWillUnmount() {
-    console.log("Goobye");
+    this.getMovies();
   }
 
   render() {
-    console.log("render");
-    return (
-      <div>
-        <h1>I`m class {this.state.count}</h1>;
-        <button onClick={this.add}>Add</button>;
-        <button onClick={this.minus}>minus</button>;
-      </div>
-    );
+    const { isLoading } = this.state;
+    return <div>{isLoading ? "Loading..." : "We are ready"} </div>;
   }
 }
 
